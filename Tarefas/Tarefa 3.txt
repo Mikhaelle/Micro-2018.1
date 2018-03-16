@@ -1,0 +1,76 @@
+1. Dada uma variável 'a' do tipo 'char' (um byte), escreva os trechos de código em C para:
+	(a) Somente setar o bit menos significativo de 'a'.
+
+	#include<msp430g2553.h>
+	#define A BIT0
+	void main (void)
+	{
+		WDTCTI = WDTPW + WDTHOLD
+		PDIR = A;
+		POUT = A;
+		while(1)
+		A |= BIT 0;
+		return 0;
+	}
+
+	(b) Somente setar dois bits de 'a': o menos significativo e o segundo menos significativo.
+	#include<msp430g2553.h>
+	#define A BIT0
+	void main (void)
+	{
+		WDTCTI = WDTPW + WDTHOLD
+		PDIR = A;
+		POUT = ;
+		while(1)
+		A |= BIT1 + BIT0;
+		return 0;
+	}
+
+	(c) Somente zerar o terceiro bit menos significativo de 'a'.
+	#include<msp430g2553.h>
+	#define A BIT0
+	void main (void)
+	{
+		WDTCTI = WDTPW + WDTHOLD
+		PDIR = A;
+		POUT = A;
+		while(1)
+		A &= ~BIT2;
+		return 0;
+	}
+	(d) Somente zerar o terceiro e o quarto bits menos significativo de 'a'.
+	#include<msp430g2553.h>
+	#define A BIT0
+	Void main(void)
+	{
+		WDTCTI = WDTPW + WDTHOLD
+		PDIR = A;
+		POUT = A;
+		while(1)
+		A &= ~(BIT2 + BIT3);
+		return 0;
+	}
+
+	(e) Somente inverter o bit mais significativo de 'a'.
+	#include<msp430g2553.h>
+	#define A BIT0
+	{
+		WDTCTI = WDTPW + WDTHOLD
+		PDIR = A;
+		POUT = A;
+		while(1)
+		
+		return 0;
+	}
+
+	(f) Inverter o nibble mais significativo de 'a', e setar o nibble menos significativo de 'a'. 
+	#include<msp430g2553.h>
+	{
+		WDTCTI = WDTPW + WDTHOLD
+		PDIR = !a &(0x0F + 0xFF);
+		PDIR = !a &(0x0F + 0xFF);
+		while(1)
+		return 0;
+	}
+
+#possiveis erros: A é apenas entrada (P1dir e P1out?) - Concertar
