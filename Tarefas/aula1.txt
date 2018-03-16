@@ -1,0 +1,26 @@
+﻿Aula1
+Aluna:Mikhaelle de Carvalho Bueno 15/0018673
+
+1. O que são sistemas embarcados?
+São sistemas controlados por computadores completos, circuitos integrados feitos sob medida, fpgas ou microprocessadores que exercem uma ativida ou tem um propósito específico e é dedicado para algum outro sistema.
+Por exemplo, um carro automático possui sistemas embarcados em que um micro controla os sistemas de freio, outro o cambio, outro o airbag e assim por diante.
+
+2. O que são sistemas microprocesssados?
+São sistemas controlados por exclusivamente por microprocessadores.
+
+3. Apresente aplicações de sistemas embarcados:
+(a) Para a indústria automotiva;
+Controle de acionamento para sistemas airbag.
+(b) Para eletrodomésticos;
+Controle de máquinas de lavar, como por exemplo, nível d'agua, tempo de centrifugação,etc...
+(c) Para automação industrial.
+Controle de esteiras e braços mecânicos por exemplo em uma industria automobilistica.
+
+4. Cite arquiteturas possíveis e as diferenças entre elas.
+Os computadores completos possuem hardware e software facilmente disponíveis, com um sistema operacional e o usuário não necessita de entendimento em eletrônica, porém diferente das outras arquiteturas, a cpu tende a esquentar bastante necessitando de refriegração e a consumir muita energia.
+Os circuitos integrados são feitos sobre medida para alguma aplicação específica, pode ser vantajoso quanto a questão de custo, espaço e complexidade, mas tem desvantagem quanto a atualização que só pode ser feita fisicamente.
+As FPGAs são placas com portas lógicas flip-flop conectados por linguagem de hardware, elas possuem plataformas e linguagem próprias, sendo mais limitada sua programação do que outras arquiteturas que podem ser programadas em linguagens de mais alto nível.
+Os microcontroladores possuem processadores, memória e periféricos de entrada e saída e podem ser programados, eles consomem menos energia, esquentam menos e tem temporizadores mais precisos, porém tem uma memória curta.
+
+5. Por que usamos o MSP430 na disciplina, ao invés de outro microcontrolador?
+O MSP430 é um microcontrolador de fácil acesso e baixo custo muito atrativo para aplicações específicas que não demandam muita mémoria, além de possuir uma plataforma didática e material disponível. Por ser programado em c ele se assemelha de outras plataformas utilizadas na industria.
