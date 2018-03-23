@@ -33,14 +33,71 @@ Utilize os registradores R11, R12, R13, R14 e R15 para armazenar valores tempor�
 if(i>j) f = g+h+10;
 else f = g-h-10;
 
+LOOP:cmp.w R8,R7
+    jge ELSE
+    mov.w #A,R11
+    add.w R6,R5
+    add.w R11,R5
+    mov.w R5,R4
+
+ELSE:
+    mov.w #A,R11
+    sub.w R6,R5
+    sub.w R11,R5
+    mov.w R5,R4
+
+EXIT:
+...
 
 3. "Traduza" o seguinte trecho de código em C para o assembly do MSP430:
 while(save[i]!=k) i++;
+LOOP:
+    mov.w R7,R12
+    rla R12
+    add.w R10,R12
+    cmp 0(R12),R9
+    jne EXIT
+    inc.w R9
+    jmp LOOP
+EXIT:
+...
 
+----------------------------------------DUVIDA-------------------------------------
 
 4. "Traduza" o seguinte trecho de código em C para o assembly do MSP430:
 for(i=0; i<100; i++) A[i] = i*2;
 
+mov.w #0, R7 --------- i=0
 
+LOOP:
+    cmp #64, R7
+    jge EXIT
+    mov.w R7, R11
+    rla R11 
+    mov.w R11, R12
+    add.w R9, R12
+    mov.w R11,0(R12)
+    inc.w R7
+    jmp LOOP
+EXIT:
+...
+    
+    
 5. "Traduza" o seguinte trecho de código em C para o assembly do MSP430:
 for(i=99; i>=0; i--) A[i] = i*2;
+
+mov.w #63, R7 --------- i=0
+
+LOOP:
+    cmp #0, R7 
+    jl EXIT
+    mov.w R7, R11
+    rla R11 
+    mov.w R11, R12
+    add.w R9, R12
+    mov.w R11,0(R12)
+    inc.w R7
+    jmp LOOP
+EXIT:
+...
+
