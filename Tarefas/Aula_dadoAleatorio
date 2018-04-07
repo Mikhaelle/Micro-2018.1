@@ -1,0 +1,4 @@
+
+copilar para ver o assembly do código c:
+
+msp430-gcc -Os -Wall -q -mmcv=msp430g2553 -S dado.s 06...
