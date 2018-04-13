@@ -37,8 +37,16 @@ int main() {
 
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. A variável S é fornecida pelo registrador R15, e a raiz quadrada de S (ou seja, a variável x) é fornecida pelo registrador R15 também.
 
-
-
+divisao: // dividendo R15, Divisor R14
+        mov.w R15, R13
+        mov.w R14, R12  
+        cmp R13,R12
+        jge soma:
+        clr.w R15
+        ret
+soma:
+        
+    
 2.(a) Escreva uma função em C que calcule x elevado à N-ésima potência, seguindo o seguinte protótipo:
 int Potencia(int x, int N);
 
