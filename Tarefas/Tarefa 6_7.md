@@ -37,6 +37,7 @@ int main() {
 
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. A variável S é fornecida pelo registrador R15, e a raiz quadrada de S (ou seja, a variável x) é fornecida pelo registrador R15 também.
 
+```
 divisao:
         MOV.W   #1,R13
         CMP R14,R15
@@ -74,7 +75,7 @@ Raiz_Quadrada_loop:
         jmp Raiz_Quadrada
 
 exit:
-
+```
 
 2.(a) Escreva uma função em C que calcule x elevado à N-ésima potência, seguindo o seguinte protótipo:
 int Potencia(int x, int N);
@@ -106,6 +107,7 @@ int main() {
 
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. x e n são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida no registrador R15.
 
+```
 main:   NOP                             ; main program
         MOV.W   #WDTPW+WDTHOLD,&WDTCTL  ; Stop watchdog timer
         MOV.W   #2,R15                 ; R15 = X
@@ -147,9 +149,9 @@ EXIT:
 EXIT_2:
       JMP $
 END
-
+```
 3. Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula a divisão de a por b, onde a, b e o valor de saída são inteiros de 16 bits. a e b são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida através do registrador R15.
-
+```
 divisao:
         MOV.W   #1,R13
         CMP R14,R15
@@ -165,10 +167,10 @@ div_else:
         CLR.W R14
         CLR.W R13
         RET
-
+```
 
 4.Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula o resto da divisão de a por b, onde a, b e o valor de saída são inteiros de 16 bits. a e b são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida através do registrador R15.
-
+```
 divisao:
         CMP R14,R15
         JGE div_else
@@ -178,7 +180,7 @@ div_else:
         CALL #divisao
         CLR.W R14
         RET
-
+```
 5.(a) Escreva uma função em C que indica a primalidade de uma variável inteira sem sinal, retornando o valor 1 se o número for primo, e 0, caso contrário. Siga o seguinte protótipo:
 
 ```c
@@ -209,6 +211,60 @@ int main() {
 
 int Primalidade(unsigned int x);
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. A variável de entrada é fornecida pelo registrador R15, e o valor de saída também.
+```
+main:   NOP                             ; main program
+        MOV.W   #WDTPW+WDTHOLD,&WDTCTL  ; Stop watchdog timer
+        MOV.W   #10,R15                 ; R15 = X
+        MOV.W   #1,R14                  ; R14 = n
+        MOV.W   #0,R13
+        MOV.W  R15,R12
+        CALL    #LOOP         ; R15 <= sqrt(R15)              
+        JMP $                           ; jump to current location '$'
+                                        ; (endless loop)
+
+;=====================================================
+;==================incrementando o divisor============
+;=====================================================
+LOOP:   
+        ADD.W #1, R14
+        CMP R14,R12
+        JEQ PRIMO
+        mov.w R12,R15
+        call #divisao
+        call #PRIMO
+
+;===================================================
+;=================pegando o resto===================
+;===================================================
+divisao:
+        CMP R14,R15
+        JGE div_else
+        ret
+div_else:
+        SUB.W R14,R15
+        CALL #divisao
+        RET
+
+;===============================================
+;====conferindo primalidade comparando com 0 ===
+;===============================================
+PRIMO:
+        CMP R13,R15
+        JEQ NPRIMO
+        JMP EPRIMO
+NPRIMO:
+        CLR.W R15
+        JMP $
+EPRIMO:
+        CMP R14,R12
+        JEQ END1
+        CALL #LOOP
+END1:
+        MOV.W #1, R15
+        JMP $
+
+END
+```
 
 6. Escreva uma função em C que calcula o duplo fatorial de n, representado por n!!. Se n for ímpar, n!! = 135*...n, e se n for par, n!! = 246...n. Por exemplo, 9!! = 13579 = 945 e 10!! = 2468*10 = 3840. Além disso, 0!! = 1!! = 1. O protótipo da função é:
 unsigned long long DuploFatorial(unsigned long long n);
