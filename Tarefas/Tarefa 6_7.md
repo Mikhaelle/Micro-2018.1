@@ -106,6 +106,48 @@ int main() {
 
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. x e n são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida no registrador R15.
 
+main:   NOP                             ; main program
+        MOV.W   #WDTPW+WDTHOLD,&WDTCTL  ; Stop watchdog timer
+        MOV.W   #2,R15                 ; R15 = X
+        MOV.W   #10,R14                  ; R14 = n
+        MOV.W   #0,R13
+        MOV.W   R15,R12
+        MOV.W  #1,R11
+        CALL    #ELEVADO         ; R15 <= sqrt(R15)              
+        JMP $                           ; jump to current location '$'
+                                        ; (endless loop)
+
+ELEVADO:
+      DEC.W R14
+      CMP.W R13,R14
+      JGE ELEVADO_ELSE
+
+ELEVADO_ELSE:
+      CALL #MULTIPLICACAO
+
+MULTIPLICACAO:
+      DEC.W R11
+      CMP.W R13,R11
+      JGE MULTIPLICACAO_ELSE
+
+MULTIPLICACAO_ELSE:
+      JEQ EXIT
+      ADD.W R12,R15
+      CALL #MULTIPLICACAO
+
+EXIT:
+    CMP.W R13,R14
+    JEQ EXIT_2
+    PUSH.W R12
+    PUSH.W R15
+    POP.W R11
+    POP.W R15
+    CALL #ELEVADO
+
+EXIT_2:
+      JMP $
+END
+
 3. Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula a divisão de a por b, onde a, b e o valor de saída são inteiros de 16 bits. a e b são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida através do registrador R15.
 
 divisao:
@@ -126,6 +168,16 @@ div_else:
 
 
 4.Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula o resto da divisão de a por b, onde a, b e o valor de saída são inteiros de 16 bits. a e b são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida através do registrador R15.
+
+divisao:
+        CMP R14,R15
+        JGE div_else
+        RET
+div_else:
+        SUB.W R14,R15
+        CALL #divisao
+        CLR.W R14
+        RET
 
 5.(a) Escreva uma função em C que indica a primalidade de uma variável inteira sem sinal, retornando o valor 1 se o número for primo, e 0, caso contrário. Siga o seguinte protótipo:
 
