@@ -37,16 +37,45 @@ int main() {
 
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. A variável S é fornecida pelo registrador R15, e a raiz quadrada de S (ou seja, a variável x) é fornecida pelo registrador R15 também.
 
-divisao: // dividendo R15, Divisor R14
-        mov.w R15, R13
-        mov.w R14, R12  
-        cmp R13,R12
-        jge soma:
-        clr.w R15
-        ret
-soma:
-        
-    
+divisao:
+        MOV.W   #1,R13
+        CMP R14,R15
+        JGE div_else
+        CLR.W R15
+        RET
+div_else:
+        PUSH.W R13
+        SUB.W R14,R15
+        CALL #divisao
+        POP.W R14
+        ADD.W R14,R15
+        CLR.W R14
+        CLR.W R13
+        RET
+
+Raiz_Quadrada:
+        mov.w #6, R15 ------ valor a ser tirado a raiz
+        mov.w #1000, R8 --------- valor do loop
+        mov.w #0, R9   -------- valor de i
+        mov.w #1,R14
+        cmp #2,R15
+        jge Raiz_Quadrada_loop
+        mov.w #1,R15
+        jmp exit
+Raiz_Quadrada_loop:
+        cmp R8, R9
+        jge exit
+        mov.w R15,R13
+        call divisao ---------- retorna divisao S/x
+        add.w R13,R15 --------- adc o valor inicial de R15 no valor da divisao
+        mov.w #2, R14 --------- divisao do valor de (S/x + x) por 2
+        call divisao
+        mov.w R15, R14
+        jmp Raiz_Quadrada
+
+exit:
+
+
 2.(a) Escreva uma função em C que calcule x elevado à N-ésima potência, seguindo o seguinte protótipo:
 int Potencia(int x, int N);
 
@@ -78,6 +107,23 @@ int main() {
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. x e n são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida no registrador R15.
 
 3. Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula a divisão de a por b, onde a, b e o valor de saída são inteiros de 16 bits. a e b são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida através do registrador R15.
+
+divisao:
+        MOV.W   #1,R13
+        CMP R14,R15
+        JGE div_else
+        CLR.W R15
+        RET
+div_else:
+        PUSH.W R13
+        SUB.W R14,R15
+        CALL #divisao
+        POP.W R14
+        ADD.W R14,R15
+        CLR.W R14
+        CLR.W R13
+        RET
+
 
 4.Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula o resto da divisão de a por b, onde a, b e o valor de saída são inteiros de 16 bits. a e b são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida através do registrador R15.
 
@@ -115,7 +161,7 @@ int Primalidade(unsigned int x);
 6. Escreva uma função em C que calcula o duplo fatorial de n, representado por n!!. Se n for ímpar, n!! = 135*...n, e se n for par, n!! = 246...n. Por exemplo, 9!! = 13579 = 945 e 10!! = 2468*10 = 3840. Além disso, 0!! = 1!! = 1. O protótipo da função é:
 unsigned long long DuploFatorial(unsigned long long n);
 
-7.(a) Escreva uma função em C que calcula a função exponencial utilizando a série de Taylor da mesma. Considere o cálculo até o termo n = 20. O protótipo da função é double ExpTaylor(double x); 
+7.(a) Escreva uma função em C que calcula a função exponencial utilizando a série de Taylor da mesma. Considere o cálculo até o termo n = 20. O protótipo da função é double ExpTaylor(double x);
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430, mas considere que os valores de entrada e de saída são inteiros de 16 bits. A variável de entrada é fornecida pelo registrador R15, e o valor de saída também.
 
 8.Escreva uma sub-rotina na linguagem Assembly do MSP430 que indica se um vetor esta ordenado de forma decrescente. Por exemplo: [5 4 3 2 1] e [90 23 20 10] estão ordenados de forma decrescente. [1 2 3 4 5] e [1 2 3 2] não estão. O primeiro endereço do vetor é fornecido pelo registrador R15, e o tamanho do vetor é fornecido pelo registrador R14. A saída deverá ser fornecida no registrador R15, valendo 1 quando o vetor estiver ordenado de forma decrescente, e valendo 0 em caso contrário.
