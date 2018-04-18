@@ -1,20 +1,20 @@
-1. Escreva uma função em C que faz o debounce de botões ligados à porta P1.
-'''c
+1. Escreva uma funÃ§Ã£o em C que faz o debounce de botÃµes ligados Ã  porta P1.
+```c
 #include <msp430g2553.h>
 
 int Deboucing(int porta)
 {
-  /*A função recebe qual porta deve realizar o deboucing e retorna o valor lido da porta P1.X 
+  /*A funÃ§Ã£o recebe qual porta deve realizar o deboucing e retorna o valor lido da porta P1.X
   onde X refere-se a porta escolhida*/
-  /*Supondo que a porta P1 já está definida.*/
-  
+  /*Supondo que a porta P1 jï¿½ estï¿½ definida.*/
+
   x = P1IN;
   x &= porta;
   for(i=5000;i>0;i--)
   {
     if((P1IN&porta) != x))
       {
-        i--; //Houve variação na entrada, deve-se reiniciar a contagem;
+        i--; //Houve variaï¿½ï¿½o na entrada, deve-se reiniciar a contagem;
       }
     else
     {
@@ -30,10 +30,10 @@ int main( void )
 
   return 0;
 }
-'''
-2. Escreva um código em C que lê 9 botões multiplexados por 6 pinos, e pisca os LEDs da placa Launchpad de acordo com os botões. Por exemplo, se o primeiro botão é pressionado, os LEDs piscam uma vez; se o segundo botão é pressionado, os LEDs piscam duas vezes; e assim por diante. Se mais de um botão pressionado, os LEDs não piscam.
-'''c
-#include <msp430g2553.h> 
+```
+2. Escreva um cÃ³digo em C que lÃª 9 botÃµes multiplexados por 6 pinos, e pisca os LEDs da placa Launchpad de acordo com os botÃµes. Por exemplo, se o primeiro botÃ£o Ã© pressionado, os LEDs piscam uma vez; se o segundo botÃ£o Ã© pressionado, os LEDs piscam duas vezes; e assim por diante. Se mais de um botÃ£o pressionado, os LEDs nÃ£o piscam.
+```c
+#include <msp430g2553.h>
 
 /*
  * main.c
@@ -68,9 +68,9 @@ int leitor_de_botoes(void)
 
     if(((P1IN&BIT0)==0)&&(((P1IN&BIT1)==BIT1))&&(((P1IN&BIT2)==BIT2)))
     {
-        /* Deve-se garantir que somente 1 botão será pressionado.
+        /* Deve-se garantir que somente 1 botï¿½o serï¿½ pressionado.
          * Portanto, se por exemplo, a linha 0 for acionada,
-         * a linha 1 não pode estar acionada e nem a linha 2
+         * a linha 1 nï¿½o pode estar acionada e nem a linha 2
          * por isso esse tanto de ANDs ai
          * */
         linha = 1;
@@ -94,7 +94,7 @@ int leitor_de_botoes(void)
     P1DIR &= ~(X_teclado); //Definindo as colunas X como entrada
     P1OUT = 0; //Colocando as saidas em 0
     P1DIR |= Y_teclado; //Definindo as linhas Y como saida
-    P1REN &= ~(Y_teclado); //Nao é necessário mais os resistores para as linhas Y
+    P1REN &= ~(Y_teclado); //Nao ï¿½ necessï¿½rio mais os resistores para as linhas Y
     P1REN |= X_teclado; //Definindo os resistores de pull-up/pull-down para as colunas X
     P1OUT |= X_teclado; //Definindo como modo pull-up
 
@@ -148,7 +148,7 @@ void atraso(volatile unsigned int j)
 void pisca_led(int quantidade_piscadas)
 {
     int i;
-    P1OUT &= ~(LED1 + LED2); /*Inicializar a saídas P1.6 e P1.7 em 0*/
+    P1OUT &= ~(LED1 + LED2); /*Inicializar a saï¿½das P1.6 e P1.7 em 0*/
     P1DIR |= LED1 + LED2;
     for(i=0;i<=quantidade_piscadas;i++)
     {
@@ -165,4 +165,4 @@ int main(void) {
 	}
 	return 0;
 }
-'''
+```

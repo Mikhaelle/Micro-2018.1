@@ -1,14 +1,14 @@
-Para todas as questıes, utilize os LEDs e/ou os botıes da placa Launchpad do MSP430.
+Para todas as quest√µes, utilize os LEDs e/ou os bot√µes da placa Launchpad do MSP430.
 
-1. Escreva um cÛdigo em C que pisca os LEDs ininterruptamente.
-'''c
+1. Escreva um c√≥digo em C que pisca os LEDs ininterruptamente.
+```c
 #include <msp430g2553.h>
-#define LED1 BIT0   //Bit0 È o led vermelhor e foi definido como LED1
-#define LED2 BIT6   //bit6 È o led verde e foi definido como led2
+#define LED1 BIT0   //Bit0 ÔøΩ o led vermelhor e foi definido como LED1
+#define LED2 BIT6   //bit6 ÔøΩ o led verde e foi definido como led2
 #define LEDS (LED1|LED2) //para manipular led1 e led2 igualmente foi utilizado outro define
 
 void atraso(volatile unsigned int i) {
-  
+
   while((i--)>0) // enquanto n chegar em 0 vai ter atraso
 }
 
@@ -24,16 +24,16 @@ int main() {
   }
  return 0;
 }
-'''
-2. Escreva um cÛdigo em C que pisca os LEDs ininterruptamente. No ciclo que pisca os LEDs, o tempo que os LEDs ficam ligados deve ser duas vezes maior do que o tempo que eles ficam desligados.
-'''c
+```c
+2. Escreva um c√≥digo em C que pisca os LEDs ininterruptamente. No ciclo que pisca os LEDs, o tempo que os LEDs ficam ligados deve ser duas vezes maior do que o tempo que eles ficam desligados.
+```c
 #include <msp430g2553.h>
-#define LED1 BIT0   //Bit0 È o led vermelhor e foi definido como LED1
-#define LED2 BIT6   //bit6 È o led verde e foi definido como led2
+#define LED1 BIT0   //Bit0 ÔøΩ o led vermelhor e foi definido como LED1
+#define LED2 BIT6   //bit6 ÔøΩ o led verde e foi definido como led2
 #define LEDS (LED1|LED2) //para manipular led1 e led2 igualmente foi utilizado outro define
 
 void atraso(volatile unsigned int i) {
-  
+
   while((i--)>0)
   {
     P1OUT &= ~LEDS;// enquanto n chegar em 0 vai ter atraso
@@ -44,7 +44,7 @@ void tempo(volatile unsigned int j)
 {
   while((j--)>0)
   {
-    P1OUT ^= LEDS; 
+    P1OUT ^= LEDS;
   }
 }
 
@@ -60,17 +60,17 @@ int main() {
   }
  return 0;
 }
-'''
-3. Escreva um cÛdigo em C que acende os LEDs quando o bot„o È pressionado.
-'''c
+```
+3. Escreva um c√≥digo em C que acende os LEDs quando o bot√£o √© pressionado.
+```c
 #include <msp430g2553.h>
-#define LED1 BIT0   //Bit0 È o led vermelhor e foi definido como LED1
-#define LED2 BIT6   //bit6 È o led verde e foi definido como led2
+#define LED1 BIT0   //Bit0 ÔøΩ o led vermelhor e foi definido como LED1
+#define LED2 BIT6   //bit6 ÔøΩ o led verde e foi definido como led2
 #define LEDS (LED1|LED2) //para manipular led1 e led2 igualmente foi utilizado outro define
 #define BOT  BIT3
 
 void atraso(volatile unsigned int i) {
-  
+
   while((i--)>0);
 
 }
@@ -96,17 +96,17 @@ int main(void) {
   }
  return 0;
 }
-'''
-4. Escreva um cÛdigo em C que pisca os LEDs ininterruptamente somente se o bot„o for pressionado.
-'''c
+```
+4. Escreva um c√≥digo em C que pisca os LEDs ininterruptamente somente se o bot√£o for pressionado.
+```c
 #include <msp430g2553.h>
-#define LED1 BIT0   //Bit0 È o led vermelhor e foi definido como LED1
-#define LED2 BIT6   //bit6 È o led verde e foi definido como led2
+#define LED1 BIT0   //Bit0 ÔøΩ o led vermelhor e foi definido como LED1
+#define LED2 BIT6   //bit6 ÔøΩ o led verde e foi definido como led2
 #define LEDS (LED1|LED2) //para manipular led1 e led2 igualmente foi utilizado outro define
 #define BOT  BIT3
 
 void atraso(volatile unsigned int i) {
-  
+
   while((i--)>0);
 
 }
@@ -130,6 +130,5 @@ int main(void) {
   }
  return 0;
 }
-'''
-5. Escreva um cÛdigo em C que acende os LEDs quando o bot„o È pressionado. Deixe o MSP430 em modo de baixo consumo, e habilite a interrupÁ„o do bot„o.
-
+```
+5. Escreva um c√≥digo em C que acende os LEDs quando o bot√£o √© pressionado. Deixe o MSP430 em modo de baixo consumo, e habilite a interrup√ß√£o do bot√£o.

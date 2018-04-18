@@ -1,6 +1,6 @@
-1. Dada uma variável 'a' do tipo 'char' (um byte), escreva os trechos de código em C para:
+1. Dada uma variï¿½vel 'a' do tipo 'char' (um byte), escreva os trechos de cï¿½digo em C para:
 	(a) Somente setar o bit menos significativo de 'a'.
-'''c
+```c
 	#include<msp430g2553.h>
 	#define A BIT0
 	void main (void)
@@ -11,9 +11,9 @@
 		A |= BIT 0;
 		return 0;
 	}
-'''
+```
 	(b) Somente setar dois bits de 'a': o menos significativo e o segundo menos significativo.
-'''c
+```c
 	#include<msp430g2553.h>
 	#define A BIT0
 	void main (void)
@@ -24,9 +24,9 @@
 		A |= BIT1 + BIT0;
 		return 0;
 	}
-'''
+```
 	(c) Somente zerar o terceiro bit menos significativo de 'a'.
-'''c
+```c
 	#include<msp430g2553.h>
 	#define A BIT0
 	void main (void)
@@ -37,9 +37,9 @@
 		A &= ~BIT2;
 		return 0;
 	}
-'''	
+```
 	(d) Somente zerar o terceiro e o quarto bits menos significativo de 'a'.
-'''c
+```c
 	#include<msp430g2553.h>
 	#define A BIT0
 	Void main(void)
@@ -50,9 +50,9 @@
 		A &= ~(BIT2 + BIT3);
 		return 0;
 	}
-'''
+```
 	(e) Somente inverter o bit mais significativo de 'a'.
-'''c
+```c
 	#include<msp430g2553.h>
 	#define A BIT0
 	{
@@ -62,21 +62,21 @@
 		A ^= BIT7;
 		return 0;
 	}
-'''
-	(f) Inverter o nibble mais significativo de 'a', e setar o nibble menos significativo de 'a'. 
-'''c
+```
+	(f) Inverter o nibble mais significativo de 'a', e setar o nibble menos significativo de 'a'.
+```c
 	#include<msp430g2553.h>
 	{
 		WDTCTI = WDTPW + WDTHOLD
 		P1IN |= A;
 		while(1)
-		A ^= BIT7 + BIT6 + BIT5 + BIT4; /*Fazendo uma operação de XOR com 1111 0000*/
-		A |= BIT3 + BIT2 + BIT1 + BIT0; /*Fazendo uma operação de OU com 0000 1111*/		
+		A ^= BIT7 + BIT6 + BIT5 + BIT4; /*Fazendo uma operaï¿½ï¿½o de XOR com 1111 0000*/
+		A |= BIT3 + BIT2 + BIT1 + BIT0; /*Fazendo uma operaï¿½ï¿½o de OU com 0000 1111*/		
 		return 0;
 	}
-'''
-2. Considerando a placa Launchpad do MSP430, escreva o código em C para piscar os dois LEDs ininterruptamente.
-'''c
+```
+2. Considerando a placa Launchpad do MSP430, escreva o cï¿½digo em C para piscar os dois LEDs ininterruptamente.
+```c
 #include <msp430g2553.h>
 #define LED1 BIT0
 #define LED2 BIT6
@@ -99,9 +99,9 @@ int main(void)
   }
   return 0;
 }
-'''
-3. Considerando a placa Launchpad do MSP430, escreva o código em C para piscar duas vezes os dois LEDs sempre que o usuário pressionar o botão.
-'''c
+```
+3. Considerando a placa Launchpad do MSP430, escreva o cï¿½digo em C para piscar duas vezes os dois LEDs sempre que o usuï¿½rio pressionar o botï¿½o.
+```c
 #include <msp430g2553.h>
 #define LED1 BIT0
 #define LED2 BIT6
@@ -137,18 +137,18 @@ int main(void)
   }
   return 0;
 }
-'''
-4. Considerando a placa Launchpad do MSP430, faça uma função em C que pisca os dois LEDs uma vez.
-'''c
+```
+4. Considerando a placa Launchpad do MSP430, faï¿½a uma funï¿½ï¿½o em C que pisca os dois LEDs uma vez.
+```c
 int pisca(void)
 {
       P1OUT ^= LEDS;
       atraso(0xffff);
-    
+
 }
-'''
-5. Reescreva o código da questão 2 usando a função da questão 4.
-'''c
+```
+5. Reescreva o cï¿½digo da questï¿½o 2 usando a funï¿½ï¿½o da questï¿½o 4.
+```c
 #include <msp430g2553.h>
 #define LED1 BIT0
 #define LED2 BIT6
@@ -163,7 +163,7 @@ int pisca(void)
 {
       P1OUT ^= LEDS;
       atraso(0xffff);
-    
+
 }
 
 int main(void)
@@ -177,9 +177,9 @@ int main(void)
   }
   return 0;
 }
-'''
-6. Reescreva o código da questão 3 usando a função da questão 4.
-'''c
+```
+6. Reescreva o cï¿½digo da questï¿½o 3 usando a funï¿½ï¿½o da questï¿½o 4.
+```c
 #include <msp430g2553.h>
 #define LED1 BIT0
 #define LED2 BIT6
@@ -220,4 +220,4 @@ int main(void)
   }
   return 0;
 }
-'''
+```
