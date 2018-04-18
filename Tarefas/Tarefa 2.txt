@@ -16,17 +16,21 @@ int main(void)
                 printf("%d eh par.\n");
         return 0;
 }
-Para este código, responda: (a) A variável i é armazenada na memória RAM ou ROM? Por quê? (b) O programa compilado a partir deste código é armazenado na memória RAM ou ROM? Por quê?
-a)A variável i é armazenada na memória RAM, porque o valor dado a ela pode ser modificado várias vezes e deve ser inserido, não havendo necessidade de guardar os dados.
-b)Memória ROM, porque é interessante que o código fique guardado na memória para que possa ser utilizado várias vezes
-4. Quais são as diferenças, vantagens e desvantagens das arquiteturas Harvard e Von Neumann?
-        A arquitetura von neumann é mais simples que a Harvard, porém é mais lenta por não acessar simultaneamente as memórias e rodar um processo de cada vez, enquanto a Harvard tem uma arquitetura mais complexa e é mais rápida por permitir acesso simultâneo as memórias já que ela separa os barramentos de dados das memórias de instrução e as de dados, permitindo que o processador acesse as duas simultaneamente.
+Para este código, responda: 
+(a) A variável i é armazenada na memória RAM ou ROM? Por quê? 
+(b) O programa compilado a partir deste código é armazenado na memória RAM ou ROM? Por quê?
 
-5. Considere a variável inteira i, armazenando o valor 0x8051ABCD. Se i é armazenada na memória a partir do endereço 0x0200, como ficam este byte e os seguintes, considerando que a memória é: (a) Little-endian; (b) Big-endian.
+a)A variável i é armazenada na memória RAM, porque o valor dado a ela pode ser modificado várias vezes e deve ser inserido, não havendo necessidade de guardar os dados.
+
+b)Memória ROM, porque é interessante que o código fique guardado na memória para que possa ser utilizado várias vezes
+
+4. Quais são as diferenças, vantagens e desvantagens das arquiteturas Harvard e Von Neumann?
+A arquitetura von neumann é mais simples que a Harvard, porém é mais lenta por não acessar simultaneamente as memórias e rodar um processo de cada vez, enquanto a Harvard tem uma arquitetura mais complexa e é mais rápida por permitir acesso simultâneo as memórias já que ela separa os barramentos de dados das memórias de instrução e as de dados, permitindo que o processador acesse as duas simultaneamente.
+
+5. Considere a variável inteira i, armazenando o valor 0x8051ABCD. Se i é armazenada na memória a partir do endereço 0x0200, como ficam este byte e os seguintes, considerando que a memória é: (a) Little-endian; (b) Big-endian.
 1. O Little-endian armazena primeiro os 2 bites mais significativos no endereço de memória mais baixo, ou seja a variável i ficara armazenada da seguinte forma:
 80 no endereço 0x0200, 51 no endereço 0x0201, AB no endereço 0x0202 e CD no endereço 0x0203.
 2. O Big-endian armazena primeiro os dois bites menos significativos, e a variável i ficara armazenada da seguinte maneira:
 CD no endereço 0x0200, AB no endereço 0x201, 51 no endereço 0x0202 e 80 no endereço 0x0203.
 
 6. Sabendo que o processador do MSP430 tem registradores de 16 bits, como ele soma duas variáveis de 32 bits?
-
