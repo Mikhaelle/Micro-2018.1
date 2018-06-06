@@ -40,6 +40,7 @@ int NRSTDP = 5;
 Mfrc522 Mfrc522(CS,NRSTDP);
 unsigned char serNum[5];
 #define LEDS BIT0;
+#define BUZZER1 BIT1;
 
 void setup() 
 {             
@@ -51,8 +52,9 @@ void setup()
   pinMode(RED_LED, OUTPUT);                 // Blink LED if card detected
   P1OUT |= LEDS;
   P1DIR |= LEDS;
-   P1OUT &= ~LEDS;
-  Mfrc522.Init();  
+  P1OUT &= ~LEDS;
+  Mfrc522.Init(); 
+   
 }
 
 void loop()
@@ -97,15 +99,17 @@ void loop()
     }
     else if (serNum[0] == 122 && serNum[1] == 207 && serNum[2] == 47 && serNum[3] == 48 && serNum[4] == 170)
     {
-      Serial.println("Lucas\n");
+      Serial.println("Matheus\n");
       travaAbre();
     }
     else
-    {
-      P1OUT &= ~LEDS;
-      Serial.println("Cartao invalido!\n");  
-      P1OUT &= ~LEDS;  
-    }  
+    { 
+      travaFecha();
+   //   P1OUT &= ~LEDS;
+   //   Serial.println("Cartao invalido!\n");  
+     // P1OUT &= ~LEDS;  
+    //  buzzer();
+    } 
     delay(1000);
     digitalWrite(RED_LED, LOW);
   }
@@ -114,7 +118,7 @@ void loop()
 
 //void atraso(volatile unsigned int i)
 //{
- // while((i--)>0);
+ //while((i--)>0);
 //}
 
 int travaAbre(void)
@@ -126,7 +130,21 @@ int travaAbre(void)
 
 int travaFecha(void)
 {
+   P1OUT &= ~LEDS;
   delay(2000);
-  P1OUT &= ~LEDS;
+  
   return 0;
 }
+
+//int buzzer(void)
+//{
+ // WDTCTL = WDTPW | WDTHOLD;
+  //P1OUT |= BUZZER1;
+  //P1DIR |= BUZZER1;
+  //while(1)
+  //{
+   // delay(1000);
+    //P1OUT ^= BUZZER1;
+  //}
+  //return 0;
+//}
