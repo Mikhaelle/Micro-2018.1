@@ -1,6 +1,8 @@
+
+
 /* Build: msp430-gcc -mmcu=msp430g2231 -g -o lcd.elf lcd.c */
 
-/* uC and LCD Connections 
+/*                                                                                  uC and LCD Connections 
   TP1 - Vcc (+5v)
   TP3 - Vss (Gnd) 
   P1.0 - D4
@@ -15,15 +17,15 @@
   Vcc  - A (LED+) +5V
   Clock: 1MHz             */
 
-#include <msp430g2231.h>
+#include <msp430g2553.h>
 
 // uC Port definitions
 #define lcd_port      P1OUT
 #define lcd_port_dir  P1DIR
  
 // LCD Registers masks based on pin to which it is connected
-#define LCD_EN      BIT4 
-#define LCD_RS      BIT5 
+#define LCD_EN 6 
+#define LCD_RS 7
  
 void lcd_reset()
 {
@@ -96,7 +98,7 @@ int main()
   lcd_init();
 
   lcd_cmd(0x80); // select 1st line (0x80 + addr) - here addr = 0x00
-  display_line("Bem Vindo");
+  display_line("Bem Vind");
   lcd_cmd(0xc0); // select 2nd line (0x80 + addr) - here addr = 0x40
   display_line("Mikhaelle Bueno"); 
 

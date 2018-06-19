@@ -1,3 +1,5 @@
+#include <LiquidCrystal.h>
+
 /*
 Example for TI MSP430 LaunchPads and Energia that reads a card number 
 using a RC522 MIFARE module, takes action depending on the card number,
@@ -32,8 +34,13 @@ correct pin connections:  https://github.com/miguelbalboa/rfid
 */
 
 #include "Mfrc522.h"
+#include "LiquidCrystal.h"
 #include <SPI.h>
 
+#define BUZZER 13
+#define TRAVA 12
+
+LiquidCrystal lcd(P1_1, P1_2, P1_3, P1_4, P2_7, P2_6);
 int CS = 8;                                 // chip select pin
 int NRSTDP = 5;
 Mfrc522 Mfrc522(CS,NRSTDP);
@@ -41,17 +48,30 @@ unsigned char serNum[5];
 
 void setup() 
 {             
+  lcd.begin(16,2);  
+  lcd.setCursor( 3 , 0 );
+  lcd.print("Iniciando o"); // 
+  lcd.setCursor( 4 , 1 ); 
+  lcd.print("Sistema...");
+  delay(2000);
+  lcd.clear();
+  
   Serial.begin(9600);                        
-  Serial.println("Starting RFID-RC522 MIFARE module demonstration...\n");
+  Serial.println("Iniciando sistema...\n");
 
   SPI.begin();
   digitalWrite(CS, LOW);                    // Initialize the card reader
   pinMode(RED_LED, OUTPUT);                 // Blink LED if card detected
+  pinMode(BUZZER,OUTPUT);
+  pinMode(TRAVA,OUTPUT);
   Mfrc522.Init();  
 }
 
 void loop()
 {
+   digitalWrite(BUZZER, LOW);
+   digitalWrite(TRAVA,LOW);
+   
   unsigned char status;
   unsigned char str[MAX_LEN];
     
@@ -70,7 +90,7 @@ void loop()
   if (status == MI_OK)
   {
     digitalWrite(RED_LED, HIGH);              // Card or tag detected!
-    Serial.print("The card's number is: ");
+    Serial.print("O numero do cartao e: ");
     Serial.print(serNum[0]);
     Serial.print(" , ");
     Serial.print(serNum[1]);
@@ -86,15 +106,39 @@ void loop()
  // and then adding an "else if" statement below.
     if(serNum[0] == 34 && serNum[1] == 19 && serNum[2] == 24 && serNum[3] == 13 && serNum[4] == 36) 
     {
-      Serial.println("Mikhaelle\n");
+        //buzzer da um bip
+         digitalWrite(BUZZER, HIGH); //BUZZER liga se for cartão valido
+         delay(500);
+         digitalWrite(BUZZER, LOW); //Buzer desliga
+         
+         digitalWrite(TRAVA,HIGH); //trava abre
+         delay(1000);
+         
+         Serial.println("Mikhaelle\n");
     }
     else if (serNum[0] == 122 && serNum[1] == 207 && serNum[2] == 47 && serNum[3] == 48 && serNum[4] == 170)
     {
-      Serial.println("Lucas\n");
+        //buzzer da um bip
+         digitalWrite(BUZZER, HIGH);
+         delay(500);
+         digitalWrite(BUZZER, LOW);
+         
+         digitalWrite(TRAVA,HIGH);
+         delay(500);
+         Serial.println("Matheus\n");
     }
     else
     {
-      Serial.println("SPECTRE attempting entry!\n");    
+         digitalWrite(TRAVA,LOW);
+         //Buzzer da dois bips
+         digitalWrite(BUZZER, HIGH);
+         delay(250);
+         digitalWrite(BUZZER, LOW);
+         delay(250);
+         digitalWrite(BUZZER, HIGH);
+         delay(250);
+         digitalWrite(BUZZER, LOW);
+         Serial.println("Cartao Invalido!\n");    
     
     }  
     delay(1000);

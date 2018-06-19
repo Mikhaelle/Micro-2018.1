@@ -1,3 +1,5 @@
+
+
 /*
 Example for TI MSP430 LaunchPads and Energia that reads a card number 
 using a RC522 MIFARE module, takes action depending on the card number,
@@ -34,32 +36,33 @@ correct pin connections:  https://github.com/miguelbalboa/rfid
 #include "Mfrc522.h"
 #include <SPI.h>
 #include <msp430g2553.h>
+#define BUZZER BIT1
+#define TRAVA BIT2
 
 int CS = 8;                                 // chip select pin
 int NRSTDP = 5;
 Mfrc522 Mfrc522(CS,NRSTDP);
 unsigned char serNum[5];
-#define LEDS BIT0;
-#define BUZZER1 BIT1;
+
 
 void setup() 
 {             
   Serial.begin(9600);                        
-  Serial.println("Starting RFID-RC522 MIFARE module demonstration...\n");
+  Serial.println("Iniciando sistema...\n");
 
   SPI.begin();
   digitalWrite(CS, LOW);                    // Initialize the card reader
   pinMode(RED_LED, OUTPUT);                 // Blink LED if card detected
-  P1OUT |= LEDS;
-  P1DIR |= LEDS;
-  P1OUT &= ~LEDS;
+  pinMode(BUZZER, OUTPUT);                  
+  pinMode(TRAVA, OUTPUT);
   Mfrc522.Init(); 
    
 }
 
 void loop()
 {
-  P1OUT &= ~LEDS;
+  digitalWrite(BUZZER, LOW);
+  digitalWrite(TRAVA, LOW);
   unsigned char status;
   unsigned char str[MAX_LEN];
     
@@ -95,20 +98,23 @@ void loop()
     if(serNum[0] == 34 && serNum[1] == 19 && serNum[2] == 24 && serNum[3] == 13 && serNum[4] == 36) 
     {
       Serial.println("Mikhaelle\n");
-       travaAbre();
+      digitalWrite(BUZZER, HIGH);
+      digitalWrite(TRAVA, HIGH);
     }
     else if (serNum[0] == 122 && serNum[1] == 207 && serNum[2] == 47 && serNum[3] == 48 && serNum[4] == 170)
     {
       Serial.println("Matheus\n");
-      travaAbre();
+      digitalWrite(BUZZER, HIGH);
+      digitalWrite(TRAVA, HIGH);
     }
     else
     { 
-      travaFecha();
-   //   P1OUT &= ~LEDS;
-   //   Serial.println("Cartao invalido!\n");  
-     // P1OUT &= ~LEDS;  
-    //  buzzer();
+      Serial.println("Cartão Inválido\n");
+      digitalWrite(TRAVA, LOW);
+      digitalWrite(BUZZER, HIGH);
+      delay(1000);
+      //digitalWrite(BUZZER, HIGH);
+   
     } 
     delay(1000);
     digitalWrite(RED_LED, LOW);
@@ -116,35 +122,4 @@ void loop()
   Mfrc522.Halt();                         
 }
 
-//void atraso(volatile unsigned int i)
-//{
- //while((i--)>0);
-//}
 
-int travaAbre(void)
-{
-    delay(2000);
-    P1OUT ^= LEDS;
-  return 0;
-}
-
-int travaFecha(void)
-{
-   P1OUT &= ~LEDS;
-  delay(2000);
-  
-  return 0;
-}
-
-//int buzzer(void)
-//{
- // WDTCTL = WDTPW | WDTHOLD;
-  //P1OUT |= BUZZER1;
-  //P1DIR |= BUZZER1;
-  //while(1)
-  //{
-   // delay(1000);
-    //P1OUT ^= BUZZER1;
-  //}
-  //return 0;
-//}
