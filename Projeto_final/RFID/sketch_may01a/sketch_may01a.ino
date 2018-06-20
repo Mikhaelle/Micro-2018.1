@@ -1,20 +1,5 @@
-#include <LiquidCrystal.h>
 
-/*
-Example for TI MSP430 LaunchPads and Energia that reads a card number 
-using a RC522 MIFARE module, takes action depending on the card number,
-and prints it to the serial monitor.
-https://www.addicore.com/RFID-AddiKit-with-RC522-MIFARE-Module-RFID-Cards-p/126.htm
-Based on code and ideas from Eelco Rouw (www.43oh.com), Grant Gibson
-(www.grantgibson.co.uk), Dr.Leong (www.b2cqshop.com), and
-Craig Thompson/Aaron Norris at Addicore.
-Minor modifications to above by Frank Milburn 10 June 2015
-Released into the public domain
-Tested on MSP-EXP430G2 LaunchPad
-          MSP-EXP430F5529 LaunchPad
-          MSP-EXP430FR5969 LaunchPad
- 
-Pin Connections
+/*Pin Connections RFID
 ===================================      
 RFID Module       MSP430 LaunchPads        
 --------------    -----------------
@@ -26,22 +11,32 @@ Pin 5  (IRQ)      Not connected
 Pin 6  (GND)      GND
 Pin 7  (RST)      Pin 10
 Pin 8  (3V3)      3V3
-Addicore has a very good introduction to this module, written for Arduino.
-Try the site below for additional detail on the module and examples
-which include writing to a card, dumping detailed information, changing
-the card user ID, etc.  It will run on LaunchPads or Arduinos with the
-correct pin connections:  https://github.com/miguelbalboa/rfid
-*/
 
+Pin Connections LCD
+  ===================================
+  Display Module    MSP430 LaunchPads
+  --------------    -----------------
+  EN                P2_4     
+  RS                P2_3
+  D4                P2_1
+  D5                P1_4    
+  D6                P2_7
+  D7                P2_6  
+*/
 #include "Mfrc522.h"
 #include "LiquidCrystal.h"
 #include <SPI.h>
 
-#define BUZZER 13
-#define TRAVA 12
+#define BUZZER 13 // Buzzer pino 13
+#define TRAVA 3 //Trava pino 3
+const int buttonPin = PUSH2; // botão da placa
 
-LiquidCrystal lcd(P1_1, P1_2, P1_3, P1_4, P2_7, P2_6);
-int CS = 8;                                 // chip select pin
+//Configurações do botão para abrir a trava
+int buttonState = 0;             // Estado atual de leitura do botão
+
+LiquidCrystal lcd(P2_3, P2_4, P2_1, P1_4, P2_7, P2_6); // Pinos do LCD
+
+int CS = 8;                                 
 int NRSTDP = 5;
 Mfrc522 Mfrc522(CS,NRSTDP);
 unsigned char serNum[5];
@@ -64,13 +59,34 @@ void setup()
   pinMode(RED_LED, OUTPUT);                 // Blink LED if card detected
   pinMode(BUZZER,OUTPUT);
   pinMode(TRAVA,OUTPUT);
+  pinMode(buttonPin, INPUT_PULLUP);        // Botão do tipo pull-up normalmente 1
   Mfrc522.Init();  
+
 }
 
 void loop()
 {
+  
+  lcd.setCursor( 4 , 0 );
+  lcd.print("Aproxime"); // 
+  lcd.setCursor( 4 , 1 ); 
+  lcd.print("o cartao");
+  delay(200);
    digitalWrite(BUZZER, LOW);
    digitalWrite(TRAVA,LOW);
+
+   
+  buttonState = digitalRead(buttonPin);
+
+  if (buttonState == HIGH) {     
+    // trava normalmente fechada
+    digitalWrite(TRAVA, LOW);  
+  } 
+  else {
+    // Quando botão é precionado a trava abre
+    digitalWrite(TRAVA, HIGH); 
+  }
+
    
   unsigned char status;
   unsigned char str[MAX_LEN];
@@ -78,6 +94,10 @@ void loop()
   status = Mfrc522.Request(PICC_REQIDL, str);
   if (status == MI_OK)
   {
+      lcd.clear();
+    lcd.print("Cartao detectado");
+    delay(750);
+    lcd.clear();
     Serial.print("Card detected: ");
     Serial.print(str[0],BIN);
     Serial.print(" , ");
@@ -110,7 +130,16 @@ void loop()
          digitalWrite(BUZZER, HIGH); //BUZZER liga se for cartão valido
          delay(500);
          digitalWrite(BUZZER, LOW); //Buzer desliga
-         
+
+         //comando para o lcd
+          lcd.setCursor( 0 , 0 );
+          lcd.print("Bem Vinda!"); // 
+          lcd.setCursor( 0 , 1 ); 
+          lcd.print("Mikhaelle Bueno");
+          delay(2000);
+          lcd.clear();
+
+          //abre trava
          digitalWrite(TRAVA,HIGH); //trava abre
          delay(1000);
          
@@ -122,7 +151,15 @@ void loop()
          digitalWrite(BUZZER, HIGH);
          delay(500);
          digitalWrite(BUZZER, LOW);
-         
+
+         //comando para o lcd
+          lcd.setCursor( 0 , 0 );
+          lcd.print("Bem Vindo!"); // 
+          lcd.setCursor( 0 , 1 ); 
+          lcd.print("Matheus Moreira");
+          delay(2000);
+          lcd.clear();
+          
          digitalWrite(TRAVA,HIGH);
          delay(500);
          Serial.println("Matheus\n");
@@ -139,6 +176,11 @@ void loop()
          delay(250);
          digitalWrite(BUZZER, LOW);
          Serial.println("Cartao Invalido!\n");    
+
+         //comando para o lcd
+          lcd.print("Cartao Invalido!");
+          delay(2000);
+          lcd.clear();
     
     }  
     delay(1000);
@@ -146,4 +188,5 @@ void loop()
   }
   Mfrc522.Halt();                         
 }
+
 
