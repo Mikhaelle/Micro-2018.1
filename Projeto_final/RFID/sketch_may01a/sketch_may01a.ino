@@ -86,6 +86,7 @@ void loop()
     // Quando botão é precionado a trava abre
     digitalWrite(TRAVA, HIGH); 
   }
+  
 
    
   unsigned char status;
@@ -141,8 +142,10 @@ void loop()
 
           //abre trava
          digitalWrite(TRAVA,HIGH); //trava abre
+         lcd.print("Acesso liberado!");
+         delay(200);
+         lcd.clear();
          delay(1000);
-         
          Serial.println("Mikhaelle\n");
     }
     else if (serNum[0] == 122 && serNum[1] == 207 && serNum[2] == 47 && serNum[3] == 48 && serNum[4] == 170)
@@ -161,8 +164,10 @@ void loop()
           lcd.clear();
           
          digitalWrite(TRAVA,HIGH);
-         delay(500);
+         lcd.print("Acesso liberado!");
+         delay(1000);
          Serial.println("Matheus\n");
+         lcd.clear();
     }
     else
     {
@@ -178,7 +183,10 @@ void loop()
          Serial.println("Cartao Invalido!\n");    
 
          //comando para o lcd
-          lcd.print("Cartao Invalido!");
+          lcd.setCursor( 0 , 0 );
+          lcd.print("Cartao Invalido!"); // 
+          lcd.setCursor( 0 , 1 ); 
+          lcd.print("Acesso negado!");
           delay(2000);
           lcd.clear();
     
