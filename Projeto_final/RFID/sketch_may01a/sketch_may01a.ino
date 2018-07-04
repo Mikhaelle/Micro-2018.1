@@ -8,7 +8,7 @@ Pin 2  (SCK)      Pin 7  (SCK)
 Pin 3  (MOSI)     Pin 15 (MOSI)
 Pin 4  (MISO)     Pin 14 (MISO)
 Pin 5  (IRQ)      Not connected
-Pin 6  (GND)      GND
+Pin 6  (GND)      GND 
 Pin 7  (RST)      Pin 10
 Pin 8  (3V3)      3V3
 
